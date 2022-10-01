@@ -1,11 +1,12 @@
 from pytube import YouTube
 import os
+from subprocess import run
 
 
 arr = []
 arr1=[]
-output_path="D:\muzica\pytube download"
-ur = input("Enter youtube video link:")
+output_path=input("Enter the output path: ")
+ur = input("Enter youtube video link: ")
 yt= YouTube(ur)
 t=yt.streams.filter(only_audio=True)
 for s in t:
@@ -17,10 +18,16 @@ for i in arr:
     #print(bitrate)
     arr1.append(bitrate)
 steam = yt.streams.filter(only_audio = True,abr = str(max(arr1))+"kbps")
-#print(steam)
-#steam.first().download()
+
 out_file = steam.first().download(output_path)
-base, ext = os.path.splitext(out_file)
-new_file = base + '.mp3'
-os.rename(out_file, new_file)
+
+
+out_file_name = out_file[:-5]
+run([
+    'ffmpeg',
+    '-i', os.path.join(output_path, out_file),'-b:a',(str(max(arr1))+"k"),
+    os.path.join(output_path, out_file_name+".mp3"),
+    
+])
+os.remove(out_file)
 print(yt.title+" has been downloaded to " + output_path)
