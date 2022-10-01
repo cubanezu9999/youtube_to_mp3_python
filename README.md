@@ -1,5 +1,5 @@
 ﻿# youtube_to_mp3_python
-##Version 0.1
+## Version 0.1
 
 -downloads audio from youtube video
 
@@ -9,7 +9,7 @@
 
 -not true .mp3 files(classic winamp won't open them)
 
-##Version 0.2
+## Version 0.2
 
 -user must enter output location
 
